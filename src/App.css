@@ -36,3 +36,65 @@
     transform: rotate(360deg);
   }
 }
+
+.centered {
+  height: 100vh; /* Magic here */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background : #FFFFFF
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.item-list li:last-child {
+  border-bottom: none;
+}
+
+.item-list img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.item-list .title {
+  font-weight: bold;
+}
+
+.card-view {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-view .card {
+  width: 1000px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+  text-align: center;
+}
+
+.card-view .card img {
+  width: 100%;
+}
+
+.card-view .card .title {
+  font-weight: bold;
+  margin-top: 10px;
+}
