@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 import React from "react";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { BrowserRouter, Routes, Route, useParams, useNavigate, Outlet } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useParams, useNavigate, Outlet, NavLink, Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import './App.css';
+import Typography from '@mui/material/Typography';
+
 
 //class 
 import MarvelHeroDetails from "./MarvelHeroDetails";
+import MarvelHeroStory from "./MarvelHeroStory";
+
 
 export const PB_API_KEY = process.env.REACT_APP_MARVEL_PUBLIC_KEY
+
 
 function Main(props) {
 
@@ -18,14 +22,13 @@ function Main(props) {
 
     return <div>
         <BrowserRouter>
-            <h1>Marvel</h1>
             <Routes>
                 <Route path="/" element={<SearchPage />}></Route>
-                <Route path="/details/:queryId/" element={<MarvelHeroDetails />}></Route>
                 <Route path="/search" element={<SearchPage />}>
                     <Route path="/search/:queryText/" element={<SearchResult />} />
                 </Route>
-                <Route path="/detail/:info" element={<MarvelHeroDetails />}></Route>
+                <Route path="/details/:queryId/" element={<MarvelHeroDetails />}></Route>
+                <Route path="/story/:queryStoryId/" element={<MarvelHeroStory />}></Route>
                 <Route path="*" element={<p>Page not found</p>} />
             </Routes>
         </BrowserRouter>
@@ -48,20 +51,22 @@ function SearchPage(props) {
         navigate(`/search/${query}`);
     }
 
-    return <div>
-        <form onSubmit={handleSubmit}>
-            <TextField
-                id="search"
-                label="Search"
-                variant="outlined"
-                size="small"
-                value={query}
-                onChange={onQueryChanged}
-            ></TextField>{' '}
-            <Button onClick={handleSubmit} variant="contained" size="large">Search</Button>
-        </form>
-        <Outlet />
-    </div>
+    return (
+        <div className="search-wall">
+            <form style={{ padding: 20 }} align="left" onSubmit={handleSubmit}>
+                <TextField
+                    id="search"
+                    label="Input Character Name"
+                    variant="outlined"
+                    size="small"
+                    value={query}
+                    onChange={onQueryChanged}
+                ></TextField>{' '}
+                <Button style={{ backgroundColor: "#ed1d24" }} onClick={handleSubmit} variant="contained" size="large">Search</Button>
+            </form>
+            <Outlet />
+        </div>
+    )
 }
 
 function SearchResult(props) {
@@ -72,7 +77,7 @@ function SearchResult(props) {
     const navigate = useNavigate()
 
     const onClickHero = (x) => {
-        console.log("tapped hero:"+x)
+        console.log("tapped hero:" + x)
         navigate(`/details/${x}`);
     }
 

@@ -13,13 +13,12 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
+import { CircularProgress, IconButton, Box, Link } from "@mui/material";
 
 export const PB_API_KEY = process.env.REACT_APP_MARVEL_PUBLIC_KEY
 
-
-const default_comic_image = "public/marvel-comic.jpg"
-
 function MarvelHeroDetails(props) {
+    const [loading, setLoading] = useState(true);
 
     const params = useParams()
     const [comic, setComic] = useState([])
@@ -28,7 +27,7 @@ function MarvelHeroDetails(props) {
 
     const onClickHero = (x) => {
         console.log("tapped hero:" + x)
-        navigate(`/details/${x}`);
+        navigate(`/story/${x}`);
     }
 
     useEffect(() => {
@@ -51,6 +50,7 @@ function MarvelHeroDetails(props) {
                             console.log("comic", json.data)
                             console.log("comic result", json.data.results)
                             setComic(json.data.results)
+                            setLoading(false);
                         })
                 }
             })
@@ -61,18 +61,24 @@ function MarvelHeroDetails(props) {
     return (
         <div>
             <h2>Title</h2>
+            <div>
+                {loading &&
+                    <div>
+                        <CircularProgress/>
+                    </div>}
+            </div>
             <List className="card-view">
-                {Object.values(comic).map((item) => (
+                {Object.values(comic).map((avatar) => (
                     <ListItem alignItems="flex-start" divider={true}>
                         <ListItemAvatar>
                             <div>
-                                {item.images.map((imageList) => (
-                                    <Avatar alt={item.title} src={`${imageList.path}/portrait_small.${imageList.extension}`} />
+                                {avatar.images.slice(0, 1).map((imageList) => (
+                                    <Avatar alt={avatar.title} src={`${imageList.path}/portrait_small.${imageList.extension}`} />
                                 ))}
                             </div>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={item.title}
+                            primary={avatar.title}
                             secondary={
                                 <React.Fragment>
                                     <Typography
@@ -81,7 +87,7 @@ function MarvelHeroDetails(props) {
                                         variant="body2"
                                         color="text.primary">
 
-                                        Date Updated: {item.modified}
+                                        Date Updated: {avatar.modified}
                                     </Typography>
                                 </React.Fragment>
                             }
@@ -90,14 +96,14 @@ function MarvelHeroDetails(props) {
                 ))}
             </List>
             <p>Comic Series</p>
-            <ImageList cols={3} >
+            <ImageList cols={4} >
                 {Object.values(comic).map((item) => (
                     <div>
-                        {item.images.map((imageList) => (
-                            <ImageListItem onClick={() => onClickHero(imageList.id)}>
+                        {item.images.slice(0, 1).map((imageList) => (
+                            <ImageListItem onClick={() => onClickHero(item.id)}>
                                 <img
                                     src={`${imageList.path}/detail.${imageList.extension}`}
-                                    srcSet= {`${imageList.path}/detail.${imageList.extension}`}
+                                    srcSet={`${imageList.path}/detail.${imageList.extension}`}
                                     alt={imageList.title}
                                     loading="lazy"
                                     title={`${item.title}`}
