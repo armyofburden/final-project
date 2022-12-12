@@ -33,13 +33,10 @@ function MarvelHeroDetails(props) {
     useEffect(() => {
 
         console.log("called api")
-        const baseURL = 'http://gateway.marvel.com/'
-        let ts = Date.now().toString;
         let publicKey = PB_API_KEY;
         console.log("id" + params.queryId)
         console.log("key" + publicKey)
         const url = `https://gateway.marvel.com:443/v1/public/characters/${params.queryId}/comics?apikey=${publicKey}`
-        //const test = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${params.queryText}&limit=20${params.queryText}&apikey=${publicKey}`
 
         fetch(url)
             .then((response) => {
@@ -60,16 +57,16 @@ function MarvelHeroDetails(props) {
 
     return (
         <div>
-            <h2>Title</h2>
+            <h1 style={{margin:16,color:'#ed1d24'}}>Comic Titles</h1>
             <div>
                 {loading &&
                     <div>
-                        <CircularProgress/>
+                        <CircularProgress style={{margin:16}}/>
                     </div>}
             </div>
             <List className="card-view">
                 {Object.values(comic).map((avatar) => (
-                    <ListItem alignItems="flex-start" divider={true}>
+                    <ListItem alignItems="flex-start" divider={true} onClick={() => onClickHero(avatar.id)}>
                         <ListItemAvatar>
                             <div>
                                 {avatar.images.slice(0, 1).map((imageList) => (
@@ -95,8 +92,8 @@ function MarvelHeroDetails(props) {
                     </ListItem>
                 ))}
             </List>
-            <p>Comic Series</p>
-            <ImageList cols={4} >
+            <h1 style={{padding:16,color:'#ed1d24'}}>Comic Covers</h1>
+            <ImageList style={{margin:12}} cols={4} >
                 {Object.values(comic).map((item) => (
                     <div>
                         {item.images.slice(0, 1).map((imageList) => (

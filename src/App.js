@@ -6,8 +6,8 @@ import { NavLink, Link, BrowserRouter } from 'react-router-dom';
 
 import { Menu, AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 
-const pages = ['Home', 'About', 'Attribution'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['API', 'Author'];
+const settings = ['Cart', 'Account', 'Setting', 'Logout'];
 
 function App() {
 
@@ -113,7 +113,6 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -128,7 +127,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Click This!">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Luiz" src="/static/images/avatar/2.jpg" />
               </IconButton>

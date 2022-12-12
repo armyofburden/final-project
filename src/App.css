@@ -100,7 +100,16 @@ body {
 }
 
 .search-wall{
-  background-image: url("images/marvel-avengers.jpg");
+  background-image: url("images/marvel-wallpaper.png");
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;    
+
+}
+
+.comic-wall{
+  background-image: url("images/marvel-comic-page.jpg");
   min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
